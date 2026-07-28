@@ -1,0 +1,31 @@
+{
+  "name": "ejs-coach-blueprint",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "typecheck": "tsc -b --noEmit"
+  },
+  "dependencies": {
+    "@netlify/functions": "^3.1.10",
+    "drizzle-orm": "^0.44.2",
+    "postgres": "^3.4.7",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.2",
+    "stripe": "^18.2.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.5.2",
+    "drizzle-kit": "^0.31.1",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
+  }
+}
