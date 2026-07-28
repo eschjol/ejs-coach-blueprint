@@ -1,70 +1,57 @@
-# EJS Coach Blueprint — Golf Coach AI Business OS
+# EJS Coach Blueprint — GHL Agency Package
 
-AI-powered business operating system for golf coaches: scheduling, SMS front desk, SEO, content autopilot, ads templates, and nurture sequences.
+**Everything runs through GoHighLevel.** You set coaches up as sub-accounts under your agency. Each gets a snapshot of Erik's proven playbook: intro funnel, AI front desk, reviews, SEO pages, social, nurture, and (on Autopilot) managed ads.
 
-Built on **Netlify** (Vite + React + Functions + Database).
+## Start here
 
-## Quick start
+| Doc | What it is |
+|-----|------------|
+| [docs/ghl-master-guide.md](docs/ghl-master-guide.md) | **Main guide** — how every product module maps to GHL |
+| [docs/ghl-agency-setup.md](docs/ghl-agency-setup.md) | Configure your agency (white-label, SaaS mode, rebilling) |
+| [docs/ghl-build-order.md](docs/ghl-build-order.md) | Step-by-step: build the master snapshot in GHL |
+| [docs/ghl-snapshot-spec.md](docs/ghl-snapshot-spec.md) | Snapshot contents (pipelines, workflows, calendars) |
+| [docs/coach-onboarding-sop.md](docs/coach-onboarding-sop.md) | Per-coach setup checklist (2–3 hrs) |
+| [docs/ghl-dogfood-ejsgolf.md](docs/ghl-dogfood-ejsgolf.md) | Run Erik's business in GHL first |
+| [ghl/](ghl/) | Copy-paste templates (SMS, email, funnel, AI bot, ads) |
 
-```bash
-npm install
-npm run dev          # Frontend at http://localhost:5173
-npx netlify dev      # Full stack with functions at http://localhost:8888
-```
+## One-line pitch
 
-## Product decisions
-
-See [config/decisions.md](config/decisions.md) — brand (EJS Coach Blueprint), hybrid model, full MVP scope.
+*"I set you up on my system. You teach golf. AI handles scheduling, follow-up, reviews, ads, and marketing."*
 
 ## Architecture
 
-| Layer | Implementation |
-|-------|----------------|
-| Frontend | Vite + React — booking funnel, dashboard, SEO pages, beta signup |
-| API | Netlify Functions — book-intro, sms-webhook, review-request, seo-pages |
-| Jobs | Scheduled functions — seo-generate, content-generate, coach-report |
-| Database | Postgres via Netlify Database + Drizzle ORM |
-| AI | Netlify AI Gateway / OpenAI for SMS replies |
-| Payments | Stripe Checkout |
-| SMS | Twilio |
+```
+Erik's GHL Agency (Agency Pro)
+├── Master snapshot: EJS-Coach-Blueprint-v1
+├── White-label portal (app.ejsgolf.com)
+├── SaaS billing + rebilling
+└── Coach sub-accounts (one per client)
+    ├── Intro lesson funnel
+    ├── 6 calendars + Stripe
+    ├── Conversation AI (SMS)
+    ├── 8+ workflows
+    ├── SEO website pages
+    ├── Reputation / reviews
+    ├── Social planner
+    └── Meta/Google ads (Autopilot)
+```
 
-## Key routes
+## Package tiers
 
-| Route | Purpose |
-|-------|---------|
-| `/` | Marketing home + pricing tiers |
-| `/book/erik-schjolberg` | Intro lesson booking funnel |
-| `/dashboard/erik-schjolberg` | Coach dashboard |
-| `/golf/:coach/:page` | Local SEO landing pages |
-| `/beta` | Beta coach recruitment |
+| Tier | Coach pays | Includes |
+|------|------------|----------|
+| **Front Desk** | $197/mo | Funnel, calendar, SMS AI, reminders, reviews |
+| **Growth** | $397/mo | + SEO site, social planner, nurture, reputation |
+| **Autopilot** | $597/mo | + Erik runs ads, monthly call, content approval SMS |
+| **Setup** | $997 once | White-glove onboarding per coach |
 
-## API endpoints
+## Build sequence
 
-| Endpoint | Method | Purpose |
-|----------|--------|---------|
-| `/api/book-intro` | POST | Create booking + Stripe checkout |
-| `/api/sms-webhook` | POST | Twilio inbound → AI reply |
-| `/api/review-request` | POST | Post-lesson review SMS |
-| `/api/seo-pages` | GET | List coach SEO pages |
+1. [Set up your agency](docs/ghl-agency-setup.md) (Agency Pro, white-label, SaaS plans)
+2. [Build master snapshot](docs/ghl-build-order.md) using [ghl/copy/](ghl/copy/) templates
+3. [Dogfood on Erik](docs/ghl-dogfood-ejsgolf.md) — ejsgolf.com booking → GHL funnel
+4. Onboard 3 beta coaches via [coach-onboarding-sop.md](docs/coach-onboarding-sop.md)
 
-## Docs
+## GHL vs custom app
 
-- [config/decisions.md](config/decisions.md) — Locked product decisions
-- [docs/dogfood-ejsgolf.md](docs/dogfood-ejsgolf.md) — Deploy on Erik's business
-- [docs/EJS-COACH-BLUEPRINT-GHL.md](docs/EJS-COACH-BLUEPRINT-GHL.md) — Alternate GHL agency delivery path
-- [docs/ghl-snapshot-spec.md](docs/ghl-snapshot-spec.md) — GHL snapshot spec (if using GHL sub-accounts)
-- [docs/coach-onboarding-sop.md](docs/coach-onboarding-sop.md) — White-glove onboarding SOP
-
-## Templates
-
-- [templates/seo-pages/](templates/seo-pages/) — Local SEO page templates
-- [templates/ads/](templates/ads/) — Meta + Google ad templates
-- [templates/nurture/](templates/nurture/) — SMS/email sequences
-
-## Environment
-
-Copy [.env.example](.env.example) and configure in Netlify dashboard.
-
-## GHL alternative
-
-Coaches can also be set up as GHL sub-accounts under Erik's agency — see `/docs` for snapshot spec. This Netlify app is the standalone platform implementation from the product plan.
+Coaches never need another platform. CoachNow/V1 stay for swing video only. GHL replaces Calendly, Mailchimp, Wix, manual texting, and spreadsheet tracking.

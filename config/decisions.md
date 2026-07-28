@@ -1,43 +1,49 @@
 # Product Decisions — EJS Coach Blueprint
 
-Locked decisions for implementation (per product plan).
+## Platform
+
+**Selected: GoHighLevel (GHL) — 100% of delivery**
+
+Every coach is set up as a **sub-account under Erik's GHL agency**. Scheduling, SMS, AI, funnels, SEO pages, reviews, social, ads, and nurture all run inside GHL. No separate custom app required.
+
+| Capability | GHL feature |
+|------------|-------------|
+| Scheduling + payments | Calendars + Stripe |
+| AI front desk | Conversation AI + missed-call text-back |
+| CRM + pipeline | Opportunities pipeline |
+| Intro funnel | Funnels / Websites |
+| Local SEO pages | Website builder (duplicate pages) |
+| Reviews | Reputation management |
+| Social + blog | Social Planner + Blog |
+| Ads | Meta + Google integrations (managed by Erik on Autopilot tier) |
+| Coach billing | SaaS Mode + rebilling |
+| White-label | Agency Pro — `app.ejsgolf.com` or custom domain |
 
 ## Brand
 
-**Selected:** EJS Coach Blueprint  
-**Tagline:** The system behind Scottsdale's #1 coach — now yours.  
-**Neutral brand fallback:** Fairway Front Desk (future scale)
+**EJS Coach Blueprint** — "The system behind Scottsdale's #1 coach — now yours."
 
 ## Business model
 
-**Selected:** Hybrid  
-- Self-serve core platform (booking, AI front desk, reminders)  
-- White-glove setup tier ($997 one-time)  
-- Managed ads on Amplify tier ($499/mo)
+**Hybrid:** GHL sub-account per coach + white-glove setup ($997) + optional managed ads.
 
-## Pricing tiers
+## Pricing (what coaches pay Erik)
 
-| Tier | Price | Includes |
-|------|-------|----------|
-| Blueprint Core | $149/mo | Scheduling, AI front desk, reminders, review engine, booking page |
-| Blueprint Growth | $299/mo | + SEO pages, content autopilot, GBP optimization, nurture |
-| Blueprint Amplify | $499/mo | + Google/Meta ads management, quarterly strategy call |
-| White-Glove Setup | $997 one-time | 60-min onboarding, calendar/GBP/Stripe wiring |
+| Tier | Price | GHL snapshot tier tag |
+|------|-------|------------------------|
+| Front Desk | $197/mo | `tier-front-desk` |
+| Growth | $397/mo | `tier-growth` |
+| Autopilot | $597/mo | `tier-autopilot` |
+| Setup | $997 one-time | — |
 
-## MVP scope
+Configure matching plans in **GHL SaaS Configurator** for automated billing and sub-account creation.
 
-**Phase 1 (v1.0):** Front Desk + Scheduling — booking funnel, Stripe, calendar sync, Twilio SMS, AI replies  
-**Phase 2 (v1.0):** Growth Engine — SEO page factory, review requests, content queue with SMS approval  
-**Phase 3 (v1.0):** Ads + Playbook — ad templates, nurture sequences, monthly reports, league templates
+## Erik's agency requirements
 
-All three phases implemented in this codebase; external API keys required for production.
+- **GHL Agency Pro** (~$497/mo) — snapshots, SaaS mode, white-label, rebilling
+- Master template sub-account → export **EJS-Coach-Blueprint-v1**
+- Agency-level Twilio/Mailgun/LC Phone for branded comms
 
-## Integration priority
+## Reference code (not production)
 
-1. Google Calendar + Stripe + Twilio SMS  
-2. Netlify AI Gateway for SMS reply drafting  
-3. Google Business Profile (manual link in v1; API in v1.1)
-
-## Delivery note
-
-GHL snapshot docs in `/docs` remain available as an alternate deployment path for coaches Erik sets up manually under his agency. This Netlify app is the **Coach OS platform** referenced in the product plan.
+The `/src` and `/netlify` folders are an earlier prototype. **Do not deploy for coaches.** All production delivery is GHL. See [docs/archive-netlify-reference.md](docs/archive-netlify-reference.md).

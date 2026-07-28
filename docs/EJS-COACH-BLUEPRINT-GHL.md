@@ -1,6 +1,8 @@
 # EJS Coach Blueprint — GHL Agency Package
 
-## One-line pitch
+> **Primary platform.** All scheduling, AI, marketing, SEO, ads, and billing run through GoHighLevel sub-accounts under Erik's agency.
+
+**Start with:** [ghl-master-guide.md](ghl-master-guide.md)
 
 **"I set you up on my system. You teach golf. AI handles scheduling, follow-up, reviews, ads, and marketing."**
 
