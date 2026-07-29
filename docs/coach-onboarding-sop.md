@@ -8,7 +8,7 @@
 
 ## Phase 0: Pre-sale (before sub-account)
 
-- [ ] Coach completes **Intake Form** (see below)
+- [ ] Coach completes **Intake Form** → [ghl/funnel/coach-intake-survey.md](../ghl/funnel/coach-intake-survey.md) (`apply.ejsgolf.com`)
 - [ ] Coach signs service agreement (tier, monthly fee, setup fee, 30-day terms)
 - [ ] Collect first month + setup fee via Stripe invoice or GHL SaaS billing
 - [ ] Confirm coach has: Google Business Profile (or willing to create), professional headshot, lesson pricing
@@ -108,9 +108,17 @@
 
 ---
 
-## Intake form fields (send before setup call)
+## Intake form
 
-**Coach info**
+**Do not use a PDF or Google Form.** Coaches apply via the GHL survey funnel:
+
+**[ghl/funnel/coach-intake-survey.md](../ghl/funnel/coach-intake-survey.md)**
+
+URL: `apply.ejsgolf.com` (or your published funnel link)
+
+On submit → WF-INTAKE-01 fires → Erik notified → coach books setup call on thank-you page.
+
+Field reference (for manual lookup if needed):
 - Full name, email, mobile, city/state
 - Headshot (file upload)
 - Bio (3–5 sentences) or link to existing site

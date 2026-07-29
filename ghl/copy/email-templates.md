@@ -142,3 +142,63 @@ Ready to pick back up? {{custom_values.booking_url}}
 
 — {{custom_values.coach_name}}'s team
 ```
+
+---
+
+## EJS-intake-confirmation-email (WF-INTAKE-01)
+
+**Subject:** Application received — book your EJS Coach Blueprint setup call
+
+```
+Hi {{contact.first_name}},
+
+Thanks for applying to EJS Coach Blueprint. I built this system to run my own academy at McCormick Ranch — and now I set it up for golf coaches who'd rather teach than manage marketing software.
+
+**Your selected plan:** {{contact.coach_plan_tier}}
+
+**Next step:** Book your 60-minute white-glove setup call:
+{{custom_values.onboarding_calendar_url}}
+
+On the call we'll connect:
+• Your calendar and lesson pricing
+• Your business phone line and AI front desk
+• Payments (Stripe)
+• Google Business Profile and review automation
+
+Have ready: headshot, logo (optional), and Stripe/bank details.
+
+Questions before the call? Reply to this email or text me at (480) 861-9370.
+
+— Erik Schjolberg
+EJS Coach Blueprint
+```
+
+---
+
+## EJS-intake-setup-call-booked (WF-INTAKE-02)
+
+**Subject:** Setup call confirmed — here's what to prepare
+
+```
+Hi {{contact.first_name}},
+
+Your EJS Coach Blueprint setup call is confirmed:
+
+{{appointment.only_start_date}} at {{appointment.only_start_time}}
+
+**Before the call, please have:**
+1. Headshot (professional photo for your funnel)
+2. Lesson pricing — intro, private, packages
+3. Your weekly availability (days + hours)
+4. Google account login (for Business Profile, if applicable)
+5. Stripe account or bank details for payments
+
+**We'll build on the call:**
+• Intro lesson booking funnel
+• AI SMS front desk
+• Reminders and review requests
+• (Growth/Autopilot) SEO pages and social templates
+
+See you soon,
+Erik Schjolberg
+```

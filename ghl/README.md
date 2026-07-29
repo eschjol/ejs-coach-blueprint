@@ -14,7 +14,8 @@ Everything Erik needs to build **EJS-Coach-Blueprint-v1** inside GoHighLevel.
 |--------|----------|
 | [copy/](copy/) | SMS + email templates (paste into GHL Template Library) |
 | [copy/social-posts.md](copy/social-posts.md) | 12 Social Planner posts |
-| [funnel/](funnel/) | Intro lesson funnel page copy |
+| [funnel/coach-intake-survey.md](funnel/coach-intake-survey.md) | Coach application survey (5 steps) |
+| [funnel/intro-lesson.md](funnel/intro-lesson.md) | Student intro lesson funnel |
 | [website/](website/) | SEO pages + blog topics |
 | [conversation-ai/](conversation-ai/) | Bot training + test script |
 | [ads/](ads/) | Meta + Google ad templates |

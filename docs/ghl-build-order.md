@@ -63,12 +63,13 @@ Connect Google Calendar for Erik's test account. Verify two-way sync.
 
 ### Step 8: Intro lesson funnel
 Sites → Funnels → New → **Intro Lesson**
+(copy from `ghl/funnel/intro-lesson.md`)
 
-| Step | Page | Content source |
-|------|------|----------------|
-| 1 | Landing | [ghl/funnel/intro-lesson.md](../ghl/funnel/intro-lesson.md) |
-| 2 | Calendar | Embed Intro Lesson calendar |
-| 3 | Thank you | What to expect + add to calendar |
+### Step 8b: Coach intake survey (Erik's marketing account only)
+Sites → Funnels → New → **EJS Coach Blueprint — Apply**
+(copy from `ghl/funnel/coach-intake-survey.md`)
+
+Build in Erik's marketing sub-account, not the coach template. Export as `EJS-Agency-Marketing-v1`.
 
 ### Step 9: Package funnel
 3-step funnel: Package selection → Stripe checkout → Thank you.

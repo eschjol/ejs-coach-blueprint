@@ -124,6 +124,30 @@ Reply to them in GHL Conversations or call directly.
 
 ---
 
+## EJS-intake-confirmation (WF-INTAKE-01)
+
+```
+Hi {{contact.first_name}}! Application received for EJS Coach Blueprint.
+
+Next step — book your 60-min setup call: {{custom_values.onboarding_calendar_url}}
+
+I'll have your system live within 48 hours of our call. — Erik
+```
+
+---
+
+## EJS-intake-nudge (WF-INTAKE-03)
+
+```
+Hi {{contact.first_name}} — quick reminder to book your EJS Coach Blueprint setup call so we can get you live:
+
+{{custom_values.onboarding_calendar_url}}
+
+Reply if you have questions. — Erik
+```
+
+---
+
 ## EJS-coach-welcome (onboarding)
 
 ```

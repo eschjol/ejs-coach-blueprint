@@ -24,6 +24,7 @@ Everything in the product plan runs inside **GoHighLevel sub-accounts** under Er
 | Monthly report | Workflow WF-08 + GHL reporting | Scheduled 1st of month |
 | Coach billing | SaaS Configurator | `ghl/saas-plans.md` |
 | White-glove onboarding | Manual + SOP | `docs/coach-onboarding-sop.md` |
+| Coach application | Survey funnel (agency account) | `ghl/funnel/coach-intake-survey.md` |
 
 ---
 
