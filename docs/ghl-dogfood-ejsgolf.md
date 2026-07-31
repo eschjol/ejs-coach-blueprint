@@ -2,6 +2,10 @@
 
 Run Erik's entire lead flow through GHL before selling to other coaches.
 
+**Start here:** [erik-build-and-dogfood-runbook.md](erik-build-and-dogfood-runbook.md) — combined snapshot build + dogfood checklist with Erik's values pre-filled.
+
+**Note:** [ejsgolf.com](https://ejsgolf.com) is already on GoHighLevel. Dogfood means aligning that live account with the **EJS-Coach-Blueprint-v1** snapshot (workflows, AI, calendars, booking funnel) — not migrating off another platform.
+
 ---
 
 ## Goal
@@ -70,12 +74,9 @@ Use for beta coach sales and Proponent Group outreach.
 
 ## Conversation AI — Erik-specific training
 
-Add to bot knowledge:
-- Location: back of range at McCormick Ranch
-- Offers: individual, partner, group, junior, playing, online lessons
-- Tech: Trackman 4, 3D video, pressure plates
-- Leagues: Women's league, Duos league at McCormick Ranch
-- Philosophy: get better from day one, no "get worse to get better"
+Full copy-paste knowledge base: [ghl/conversation-ai/erik-ejsgolf-knowledge.md](../ghl/conversation-ai/erik-ejsgolf-knowledge.md)
+
+Covers: McCormick Ranch location, lesson types, TrackMan/tech, leagues, philosophy, and SMS-ready FAQ pairs.
 
 ---
 
@@ -91,8 +92,14 @@ Add to bot knowledge:
 
 ---
 
+## Metrics
+
+Track weekly in [dogfood-metrics-tracker.md](dogfood-metrics-tracker.md).
+
+---
+
 ## After dogfood
 
-1. Fix anything that broke in snapshot → export v1.0.1
+1. Fix anything that broke in snapshot → export v1.0.0.1
 2. Onboard 3 beta coaches at 50% off Growth tier
 3. Collect testimonials → raise to full pricing

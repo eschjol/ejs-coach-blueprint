@@ -2,6 +2,8 @@
 
 Build in this order inside your **EJS Blueprint Template** sub-account. Each step depends on the previous.
 
+**Erik:** Use [erik-build-and-dogfood-runbook.md](erik-build-and-dogfood-runbook.md) for pre-filled values and dogfood steps after export.
+
 **Estimated time:** 12–16 hours for v1.0 snapshot
 
 ---
