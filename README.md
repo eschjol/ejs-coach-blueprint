@@ -55,3 +55,35 @@ Erik's GHL Agency (Agency Pro)
 ## GHL vs custom app
 
 Coaches never need another platform. CoachNow/V1 stay for swing video only. GHL replaces Calendly, Mailchimp, Wix, manual texting, and spreadsheet tracking.
+
+---
+
+## Install & run (this repository)
+
+**Primary deliverable:** GHL documentation and copy-paste templates in [`docs/`](docs/) and [`ghl/`](ghl/). No install required — open the guides and build in GoHighLevel.
+
+**Optional Netlify prototype** (archived reference in [`docs/archive-netlify-reference.md`](docs/archive-netlify-reference.md)):
+
+```bash
+npm install
+npm run typecheck   # verify TypeScript
+npm run build       # production build
+npm run dev         # local dev server at http://localhost:5173
+npx netlify dev     # full stack with functions at http://localhost:8888
+```
+
+Copy [`.env.example`](.env.example) to `.env` and set `NETLIFY_DATABASE_URL`, `STRIPE_SECRET_KEY`, `TWILIO_*` for live integrations.
+
+## Repository layout
+
+| Path | Purpose |
+|------|---------|
+| `ghl/` | GHL funnel copy, SMS/email templates, ads, AI bot training |
+| `docs/` | Agency setup, snapshot spec, onboarding SOP |
+| `config/` | Product decisions |
+| `src/`, `netlify/` | Optional web prototype (not used for coach delivery) |
+| `package.json` | Node deps for optional prototype |
+
+## Branch
+
+All application code is on **`main`** (and `cursor/ghl-coach-blueprint-ba5a`).
