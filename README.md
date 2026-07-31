@@ -50,7 +50,7 @@ Erik's GHL Agency (Agency Pro)
 1. [Set up your agency](docs/ghl-agency-setup.md) (Agency Pro, white-label, SaaS plans)
 2. [Build master snapshot](docs/ghl-build-order.md) using [ghl/copy/](ghl/copy/) templates
 3. [Dogfood on Erik](docs/ghl-dogfood-ejsgolf.md) — ejsgolf.com booking → GHL funnel
-4. Onboard 3 beta coaches via [coach-onboarding-sop.md](docs/coach-onboarding-sop.md)
+4. Onboard 3 beta coaches via [coach-onboarding-sop.md](docs/coach-onboarding-sop.md) — they start at [ghl/funnel/coach-intake-survey.md](ghl/funnel/coach-intake-survey.md)
 
 ## GHL vs custom app
 
