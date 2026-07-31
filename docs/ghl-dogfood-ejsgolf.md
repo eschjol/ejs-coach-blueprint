@@ -100,6 +100,6 @@ Track weekly in [dogfood-metrics-tracker.md](dogfood-metrics-tracker.md).
 
 ## After dogfood
 
-1. Fix anything that broke in snapshot → export v1.0.0.1
+1. Fix anything that broke in snapshot → export v1.0.1
 2. Onboard 3 beta coaches at 50% off Growth tier
 3. Collect testimonials → raise to full pricing
