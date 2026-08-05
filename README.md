@@ -13,6 +13,7 @@
 | [docs/coach-onboarding-sop.md](docs/coach-onboarding-sop.md) | Per-coach setup checklist (2–3 hrs) |
 | [docs/ghl-dogfood-ejsgolf.md](docs/ghl-dogfood-ejsgolf.md) | Run Erik's business in GHL first |
 | [ghl/](ghl/) | Copy-paste templates (SMS, email, funnel, AI bot, ads) |
+| [ghl/cure-your-slice/](ghl/cure-your-slice/) | **Cure Your Slice campaign** — $27 video series funnel + Google Ads (skill suite in [`.claude/skills/`](.claude/skills/)) |
 
 ## One-line pitch
 
