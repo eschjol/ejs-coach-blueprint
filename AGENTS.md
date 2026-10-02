@@ -19,6 +19,13 @@ repo:
   when their env vars are unset** (see `netlify/functions/_shared/`), so the app
   runs end-to-end with only a database configured.
 
+## Brand rules
+
+Before writing any copy, page, or template, read
+[`config/brand-identity.md`](config/brand-identity.md). It records the company
+name decision (Coach Erik Schjolberg Golf, with EJS Golf kept as an alternate
+name) and which tools may be named as current.
+
 ## Standard commands
 
 Scripts live in `package.json` (`dev`, `build`, `typecheck`, `preview`,
