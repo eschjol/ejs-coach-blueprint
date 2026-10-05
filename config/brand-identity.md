@@ -34,3 +34,9 @@ otherwise. Agents working in this repo must follow them.
 - Google's rules: a name change that alters the proper nouns may be treated as a new
   business (close + new profile). Any rename is Erik's decision, made with Google
   support, never applied by an agent.
+
+## Credentials wording (confirmed by Erik 2026-10-05)
+
+- Scott Cowx: "5 advanced courses" (replaces "4 Levels" and "Level I + Advanced").
+- Do not list V1 or Smart2move.
+- Adult 2-hour introductory lesson: $600 (the $500 calendar is outdated).
