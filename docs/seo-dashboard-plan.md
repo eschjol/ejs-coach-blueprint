@@ -1,6 +1,24 @@
 # Scottsdale SEO Dashboard: Build Plan
 
-Status: **plan only, nothing built yet.** Written 2 Oct 2026.
+Status: **v1 live (6 Oct 2026).** Written 2 Oct 2026; decision added 6 Oct 2026.
+
+## Decision (6 Oct 2026)
+
+v1 is a private claude.ai artifact dashboard, the **Coach Erik SEO Board**
+(https://claude.ai/artifact/4NKcxm3er8uQQHyyCpd59G), backed by the artifact's own
+database. A weekly scheduled Claude run fills it:
+
+1. Runs the existing OpenSEO Scottsdale rank tracker (24 keywords, about 216 credits
+   per run, so about 860 credits a month) and appends each keyword's position.
+2. Pulls Search Console daily totals, near-page-one queries and top pages through
+   OpenSEO's existing Search Console connection (free).
+3. Runs `scripts/seo/blog_health.py`, a read-only scan of every post in the public
+   sitemap, and stores the findings.
+
+Why: it needs no new accounts, keys, hosting or Google credentials, because
+OpenSEO already holds the Search Console connection and the credit balance. The
+Netlify + Postgres build below stays the path if the board outgrows a weekly cadence
+or needs to be shared beyond Erik; the open questions under it only matter then.
 
 ## Goal
 
