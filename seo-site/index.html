@@ -77,6 +77,23 @@ td a:hover{text-decoration:underline}
 .grp{font-size:12px;color:var(--muted)}
 .empty{background:var(--panel);border-radius:8px;padding:18px;color:var(--muted)}
 .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:28px}
+.gridmap{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-width:460px}
+.gcell{aspect-ratio:1;border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;color:#fff;font-variant-numeric:tabular-nums;position:relative}
+.gcell small{position:absolute;bottom:3px;left:0;right:0;text-align:center;font-size:8px;font-weight:600;opacity:.85;line-height:1;padding:0 2px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.gc1{background:#1f7a4d} .gc2{background:#4f9d57} .gc3{background:#c98a1e} .gc10{background:#b06a1e} .gcx{background:var(--line);color:var(--muted)}
+.glegend{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px;font-size:12px;color:var(--muted)}
+.glegend span{display:inline-flex;align-items:center;gap:5px}
+.glegend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.gridlayout{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start}
+.gridlayout .side{flex:1;min-width:240px}
+.bars{display:grid;gap:8px}
+.bar{display:grid;grid-template-columns:150px 1fr auto;gap:10px;align-items:center;font-size:13px}
+.bar .track{background:var(--panel);border-radius:999px;height:16px;overflow:hidden}
+.bar .fill{height:100%;background:var(--data);border-radius:999px}
+.bar .fill.brand{background:var(--accent)}
+.revbar{height:14px;background:var(--data);border-radius:999px;min-width:3px}
+.you td{font-weight:700}
+.you{background:var(--data-soft)}
 .two>section{min-width:0}
 details{border:1px solid var(--line);border-radius:8px;padding:10px 14px}
 summary{cursor:pointer;color:var(--ink-strong);font-weight:600}
@@ -122,6 +139,34 @@ footer{font-size:12px;color:var(--muted);border-top:1px solid var(--line);paddin
     </div>
     <div class="tablebox"><table id="rankTable"><thead><tr><th>Keyword</th><th class="num">Now</th><th class="num">Change</th><th class="num">Previous</th><th>Ranking page</th></tr></thead><tbody><tr><td colspan="5" class="note">Rank checks appear here after the first weekly update.</td></tr></tbody></table></div>
     <div class="note" id="rankNote">Positions from Google mobile results for a searcher in Scottsdale, top 40 checked. "Not top 40" means ejsgolf.com did not appear.</div>
+  </section>
+
+  <section>
+    <div class="head"><h2>Local map &mdash; where you show up on Google Maps</h2><div class="note" id="gridStamp"></div></div>
+    <div id="gridWrap"><div class="empty">The Google Maps visibility grid around McCormick Ranch appears here.</div></div>
+  </section>
+
+  <div class="two">
+    <section>
+      <h2>Your local rivals</h2>
+      <div class="note">The coaches Google shows next to you, by star rating and review count. Reviews drive the map pack.</div>
+      <div class="tablebox"><table id="rivalTable"><thead><tr><th>Business</th><th class="num">Rating</th><th class="num">Reviews</th></tr></thead><tbody></tbody></table></div>
+    </section>
+    <section>
+      <h2>Who ranks for "golf lessons scottsdale"</h2>
+      <div class="note" id="compNote">Google's regular (non-map) results.</div>
+      <div class="tablebox"><table id="compTable"><thead><tr><th class="num">#</th><th>Site</th></tr></thead><tbody></tbody></table></div>
+    </section>
+  </div>
+
+  <section>
+    <div class="head"><h2>Is your name being searched?</h2><div class="note" id="brandStamp"></div></div>
+    <div id="brandWrap"><div class="empty">Brand and local search demand appears here.</div></div>
+  </section>
+
+  <section>
+    <div class="head"><h2>Google Business Profile health</h2><div class="note" id="gbpStamp"></div></div>
+    <div id="gbpWrap"><div class="empty">Your Google Business Profile summary appears here.</div></div>
   </section>
 
   <div class="two">
@@ -273,7 +318,61 @@ footer{font-size:12px;color:var(--muted);border-top:1px solid var(--line);paddin
     const tb=$("#runTable tbody"); const rows=[...state.runs].sort((a,b)=>String(b.date).localeCompare(String(a.date)));
     tb.innerHTML=rows.length?rows.map(r=>`<tr><td style="white-space:nowrap">${esc(dateLabel(String(r.date).slice(0,10)))}</td><td>${esc(r.note)}</td></tr>`).join(""):'<tr><td colspan="2" class="note">No updates logged yet.</td></tr>';
   }
-  function renderAll(){renderStamp();renderKpis();renderNotes();renderChart();renderChips();renderRanks();renderOpp();renderPages();renderHealth();renderRuns();}
+  function renderGrid(){
+    const g=state.grid, wrap=$("#gridWrap"); if(!g){return;}
+    $("#gridStamp").textContent=`"${g.keyword}" · ${g.gridSize}×${g.gridSize} grid, ${g.spacingKm} km apart · checked ${dateLabel(String(g.checkedAt).slice(0,10))}`;
+    const cls=r=>r==null?"gcx":r===1?"gc1":r<=3?"gc2":r<=10?"gc3":"gc10";
+    const cells=g.points.map(p=>{const label=p.rank==null?esc((p.top||"").split(" ")[0]):esc(p.top.split(" ")[0]);
+      return `<div class="gcell ${cls(p.rank)}" title="${esc(p.top)}">${p.rank==null?"—":p.rank}<small>${label}</small></div>`;}).join("");
+    const s=g.summary;
+    $("#gridWrap").innerHTML=`<div class="gridlayout">
+      <div><div class="gridmap">${cells}</div>
+        <div class="glegend"><span><i style="background:#1f7a4d"></i>#1</span><span><i style="background:#4f9d57"></i>Top 3</span><span><i style="background:#c98a1e"></i>4–10</span><span><i style="background:var(--line)"></i>Not top 20</span></div>
+        <div class="note" style="margin-top:8px">Each square is a spot on the map around McCormick Ranch (north is top). The number is your Maps rank there; the small label is who ranks #1 at that spot.</div>
+      </div>
+      <div class="side">
+        <div class="kpis" style="grid-template-columns:1fr 1fr">
+          <div class="kpi"><div class="label">Found in</div><div class="val">${s.found}/${s.total}</div><div class="delta flat">spots on the map</div></div>
+          <div class="kpi"><div class="label">Avg. rank</div><div class="val">${s.avgRank}</div><div class="delta flat">where you appear</div></div>
+          <div class="kpi"><div class="label">Top 3</div><div class="val">${s.top3}</div><div class="delta flat">of ${s.total} spots</div></div>
+          <div class="kpi"><div class="label">Center</div><div class="val">#${(g.points.find(p=>p.row===2&&p.col===2)||{}).rank||"—"}</div><div class="delta flat">at your bay</div></div>
+        </div>
+        <div class="callout" style="margin-top:14px">${esc(g.note)}</div>
+      </div></div>`;
+  }
+  function renderRivals(){
+    const rows=state.localRivals||[]; const tb=$("#rivalTable tbody"); if(!rows.length){return;}
+    const max=Math.max(...rows.map(r=>r.reviews));
+    tb.innerHTML=rows.map(r=>`<tr class="${r.you?'you':''}"><td>${esc(r.name)}</td><td class="num">${r.rating.toFixed(1)}★</td><td class="num"><div style="display:flex;align-items:center;gap:8px;justify-content:flex-end"><div class="revbar" style="width:${Math.max(6,Math.round(r.reviews/max*90))}px"></div>${fmt(r.reviews)}</div></td></tr>`).join("");
+  }
+  function renderComp(){
+    const c=state.competitorsOrganic, tb=$("#compTable tbody"); if(!c){return;}
+    $("#compNote").textContent=c.note||"Google's regular (non-map) results.";
+    const rows=[...c.rows];
+    tb.innerHTML=rows.map(r=>`<tr><td class="num"><span class="pill ${r.pos<=3?'bad':'warn'}">${r.pos}</span></td><td>${esc(r.domain)}${r.note?` <span class="note">· ${esc(r.note)}</span>`:""}</td></tr>`).join("")
+      +`<tr class="you"><td class="num"><span class="pill flat">~${c.youTracked}</span></td><td>ejsgolf.com <span class="note">· you (tracked)</span></td></tr>`;
+  }
+  function renderBrand(){
+    const b=state.brand, wrap=$("#brandWrap"); if(!b){return;}
+    $("#brandStamp").textContent=b.window||"";
+    const rows=b.rows||[]; const max=Math.max(1,...rows.map(r=>r.impr));
+    const bars=rows.map(r=>`<div class="bar"><div>${esc(r.q)} ${r.kind==='brand'?'<span class="pill flat">brand</span>':''}</div><div class="track"><div class="fill ${r.kind==='brand'?'brand':''}" style="width:${Math.round(r.impr/max*100)}%"></div></div><div>${fmt(r.impr)} shown · ${fmt(r.clicks)} clicks</div></div>`).join("");
+    wrap.innerHTML=`<div class="bars">${bars}</div><div class="callout" style="margin-top:14px">${esc(b.note)}</div>`;
+  }
+  function renderGbp(){
+    const g=state.gbp, wrap=$("#gbpWrap"); if(!g){return;}
+    $("#gbpStamp").innerHTML=`<a href="${esc(g.mapsUrl)}" target="_blank" rel="noopener">${esc(g.title)}</a>`;
+    const issues=(g.issues||[]).map(i=>`<li><span class="pill ${i.level}">${i.level==='good'?'ok':i.level==='bad'?'fix':'check'}</span> ${esc(i.text)}</li>`).join("");
+    wrap.innerHTML=`<div class="gridlayout">
+      <div class="side"><div class="kpis" style="grid-template-columns:1fr 1fr">
+        <div class="kpi"><div class="label">Rating</div><div class="val">${g.rating.toFixed(1)}★</div><div class="delta up">all five-star</div></div>
+        <div class="kpi"><div class="label">Reviews</div><div class="val">${fmt(g.reviews)}</div><div class="delta flat">on Google</div></div>
+        <div class="kpi"><div class="label">Photos</div><div class="val">${g.photos}</div><div class="delta flat">on the profile</div></div>
+        <div class="kpi"><div class="label">Category</div><div class="val" style="font-size:16px">${esc(g.primaryCategory)}</div><div class="delta flat">primary</div></div>
+      </div></div>
+      <div class="side"><ul class="find" style="list-style:none;padding:0;display:grid;gap:9px">${issues}</ul></div></div>`;
+  }
+  function renderAll(){renderStamp();renderKpis();renderNotes();renderChart();renderChips();renderRanks();renderGrid();renderRivals();renderComp();renderBrand();renderGbp();renderOpp();renderPages();renderHealth();renderRuns();}
 
   $("#mClicks").addEventListener("click",()=>{state.metric="clicks";$("#mClicks").setAttribute("aria-pressed","true");$("#mImpr").setAttribute("aria-pressed","false");renderChart();});
   $("#mImpr").addEventListener("click",()=>{state.metric="impressions";$("#mImpr").setAttribute("aria-pressed","true");$("#mClicks").setAttribute("aria-pressed","false");renderChart();});
@@ -281,8 +380,8 @@ footer{font-size:12px;color:var(--muted);border-top:1px solid var(--line);paddin
   renderAll();
 
   fetch("data.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(d=>{
-    ["summary","daily","opp","pages","health"].forEach(k=>{state[k]=d[k]||null;});
-    state.keywords=d.keywords||[];state.runs=d.runs||[];renderAll();
+    ["summary","daily","opp","pages","health","grid","gbp","competitorsOrganic","brand"].forEach(k=>{state[k]=d[k]||null;});
+    state.keywords=d.keywords||[];state.runs=d.runs||[];state.localRivals=d.localRivals||[];renderAll();
   }).catch(()=>{$("#stamp").textContent="Could not load data.json.";});
 })();
 </script>
