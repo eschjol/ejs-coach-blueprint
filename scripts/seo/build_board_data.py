@@ -32,6 +32,18 @@ def main():
     missing = [k for k, v in data.items() if not v]
     if missing:
         sys.exit(f"refusing to write: missing {missing} in {d}")
+
+    # Local competitor/map/brand/GBP sections, if present (refreshed weekly). Optional:
+    # a dump without them still builds, leaving the page's old local panels in place.
+    local = {"grid": "local/grid.json", "gbp": "local/gbp.json",
+             "competitorsOrganic": "local/competitors.json", "brand": "local/brand.json"}
+    for key, rel in local.items():
+        p = os.path.join(d, rel)
+        if os.path.exists(p):
+            data[key] = load(p)
+    rivals = os.path.join(d, "local", "rivals.json")
+    if os.path.exists(rivals):
+        data["localRivals"] = load(rivals).get("rows", [])
     with open(a.out, "w") as f:
         json.dump(data, f, separators=(",", ":"))
     print(f"wrote {a.out}: {len(data['keywords'])} keywords, {len(data['runs'])} runs, "
