@@ -165,6 +165,29 @@ footer{font-size:12px;color:var(--muted);border-top:1px solid var(--line);paddin
   </section>
 
   <section>
+    <div class="head"><h2>AI search &mdash; are the chatbots citing you?</h2><div class="note" id="aiStamp"></div></div>
+    <div id="aiWrap"><div class="empty">How often ChatGPT, Gemini and Google AI Overviews cite ejsgolf.com.</div></div>
+  </section>
+
+  <section>
+    <div class="head"><h2>Does your traffic convert?</h2><div class="note" id="anStamp"></div></div>
+    <div id="anWrap"><div class="empty">Organic traffic to lesson bookings, from Google Analytics.</div></div>
+  </section>
+
+  <div class="two">
+    <section>
+      <h2>Backlinks &amp; authority</h2>
+      <div class="note" id="blNote">Who links to you, and how strong your link profile is.</div>
+      <div id="blWrap"><div class="empty">Backlink summary appears here.</div></div>
+    </section>
+    <section>
+      <h2>Google reviews</h2>
+      <div class="note" id="revNote">Review count, replies, and recent reviews.</div>
+      <div id="revWrap"><div class="empty">Review summary appears here.</div></div>
+    </section>
+  </div>
+
+  <section>
     <div class="head"><h2>Google Business Profile health</h2><div class="note" id="gbpStamp"></div></div>
     <div id="gbpWrap"><div class="empty">Your Google Business Profile summary appears here.</div></div>
   </section>
@@ -372,7 +395,51 @@ footer{font-size:12px;color:var(--muted);border-top:1px solid var(--line);paddin
       </div></div>
       <div class="side"><ul class="find" style="list-style:none;padding:0;display:grid;gap:9px">${issues}</ul></div></div>`;
   }
-  function renderAll(){renderStamp();renderKpis();renderNotes();renderChart();renderChips();renderRanks();renderGrid();renderRivals();renderComp();renderBrand();renderGbp();renderOpp();renderPages();renderHealth();renderRuns();}
+  function renderAi(){
+    const a=state.aiVisibility, wrap=$("#aiWrap"); if(!a){return;}
+    $("#aiStamp").textContent=`${a.prompts} questions · checked ${dateLabel(String(a.checkedAt).slice(0,10))} · next ${dateLabel(String(a.nextRun).slice(0,10))}`;
+    const bars=(a.engines||[]).map(e=>`<div class="bar"><div>${esc(e.engine)}</div><div class="track"><div class="fill" style="width:${Math.round(e.citation)}%;background:${e.citation>0?'var(--data)':'var(--line)'}"></div></div><div>${e.citation.toFixed(1)}% of answers</div></div>`).join("");
+    wrap.innerHTML=`<div class="gridlayout"><div class="side">
+      <div class="kpi" style="max-width:260px"><div class="label">You're cited in</div><div class="val">${a.citationOverall.toFixed(1)}%</div><div class="delta flat">of AI answers overall</div></div>
+      <div class="bars" style="margin-top:14px">${bars}</div></div>
+      <div class="side"><div class="callout">${esc(a.note)}</div></div></div>`;
+  }
+  function renderAnalytics(){
+    const a=state.analytics, wrap=$("#anWrap"); if(!a){return;}
+    $("#anStamp").textContent=`${esc(a.property)} · ${a.window}`;
+    if(a.status==="not_recording"){
+      const issues=(a.issues||[]).map(i=>`<li><span class="pill ${i.level}">${i.level==='bad'?'fix':'check'}</span> ${esc(i.text)}</li>`).join("");
+      wrap.innerHTML=`<div class="callout" style="border-color:var(--bad);background:var(--bad-bg)"><b>Analytics is not recording visits.</b> Organic sessions and bookings can't be measured yet.</div>
+        <ul class="find" style="list-style:none;padding:0;display:grid;gap:9px;margin-top:12px">${issues}</ul>
+        <div class="note" style="margin-top:10px">${esc(a.note)}</div>`;
+      return;
+    }
+    wrap.innerHTML=`<div class="note">${esc(a.note)}</div>`;
+  }
+  function renderBacklinks(){
+    const b=state.backlinks, wrap=$("#blWrap"); if(!b){return;}
+    const tr=b.trend||[]; const max=Math.max(1,...tr.map(x=>x.refDomains));
+    const spark=tr.map(x=>`<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px"><div style="width:70%;background:var(--data);border-radius:2px 2px 0 0;height:${Math.round(x.refDomains/max*60)}px"></div><div style="font-size:9px;color:var(--muted)">${String(x.date).slice(2,7)}</div></div>`).join("");
+    const real=(b.topReal||[]).map(r=>`<li>${esc(r.domain)}${r.note?` <span class="note">· ${esc(r.note)}</span>`:""}</li>`).join("");
+    wrap.innerHTML=`<div class="kpis" style="grid-template-columns:1fr 1fr">
+      <div class="kpi"><div class="label">Referring domains</div><div class="val">${fmt(b.referringDomains)}</div><div class="delta flat">sites linking to you</div></div>
+      <div class="kpi"><div class="label">Spam score</div><div class="val">${b.spamScore}%</div><div class="delta ${b.spamScore>=30?'down':'flat'}">of the profile</div></div></div>
+      <div style="display:flex;gap:4px;align-items:flex-end;height:72px;margin-top:14px">${spark}</div>
+      <div class="note" style="margin-top:4px">Referring domains over the last year.</div>
+      <div class="callout" style="margin-top:12px">${esc(b.note)}</div>
+      <div style="margin-top:12px"><b style="font-size:13px">Your real editorial links</b><ul class="find" style="margin-top:6px">${real}</ul></div>`;
+  }
+  function renderReviews(){
+    const r=state.reviews, wrap=$("#revWrap"); if(!r){return;}
+    const recent=(r.recent||[]).map(x=>`<li><b>${esc(x.name)}</b> <span class="note">· ${dateLabel(String(x.date).slice(0,10))}</span><br>${esc(x.excerpt)}</li>`).join("");
+    wrap.innerHTML=`<div class="kpis" style="grid-template-columns:1fr 1fr 1fr">
+      <div class="kpi"><div class="label">Reviews</div><div class="val">${fmt(r.total)}</div><div class="delta flat">${r.rating.toFixed(1)}★</div></div>
+      <div class="kpi"><div class="label">Unanswered</div><div class="val">${r.unanswered}</div><div class="delta ${r.unanswered===0?'up':'down'}">${r.unanswered===0?'all replied':'to reply'}</div></div>
+      <div class="kpi"><div class="label">Top rival</div><div class="val">${fmt(r.rivalLeader.reviews)}</div><div class="delta down">${esc(r.rivalLeader.name)}</div></div></div>
+      <div class="callout good" style="margin-top:12px">${esc(r.note)}</div>
+      <div style="margin-top:12px"><b style="font-size:13px">Recent reviews</b><ul class="find" style="margin-top:6px;display:grid;gap:8px">${recent}</ul></div>`;
+  }
+  function renderAll(){renderStamp();renderKpis();renderNotes();renderChart();renderChips();renderRanks();renderGrid();renderRivals();renderComp();renderBrand();renderGbp();renderAi();renderAnalytics();renderBacklinks();renderReviews();renderOpp();renderPages();renderHealth();renderRuns();}
 
   $("#mClicks").addEventListener("click",()=>{state.metric="clicks";$("#mClicks").setAttribute("aria-pressed","true");$("#mImpr").setAttribute("aria-pressed","false");renderChart();});
   $("#mImpr").addEventListener("click",()=>{state.metric="impressions";$("#mImpr").setAttribute("aria-pressed","true");$("#mClicks").setAttribute("aria-pressed","false");renderChart();});
@@ -380,7 +447,7 @@ footer{font-size:12px;color:var(--muted);border-top:1px solid var(--line);paddin
   renderAll();
 
   fetch("data.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(d=>{
-    ["summary","daily","opp","pages","health","grid","gbp","competitorsOrganic","brand"].forEach(k=>{state[k]=d[k]||null;});
+    ["summary","daily","opp","pages","health","grid","gbp","competitorsOrganic","brand","aiVisibility","analytics","backlinks","reviews"].forEach(k=>{state[k]=d[k]||null;});
     state.keywords=d.keywords||[];state.runs=d.runs||[];state.localRivals=d.localRivals||[];renderAll();
   }).catch(()=>{$("#stamp").textContent="Could not load data.json.";});
 })();

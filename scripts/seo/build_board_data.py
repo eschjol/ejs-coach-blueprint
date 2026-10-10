@@ -36,7 +36,9 @@ def main():
     # Local competitor/map/brand/GBP sections, if present (refreshed weekly). Optional:
     # a dump without them still builds, leaving the page's old local panels in place.
     local = {"grid": "local/grid.json", "gbp": "local/gbp.json",
-             "competitorsOrganic": "local/competitors.json", "brand": "local/brand.json"}
+             "competitorsOrganic": "local/competitors.json", "brand": "local/brand.json",
+             "aiVisibility": "local/aiVisibility.json", "analytics": "local/analytics.json",
+             "backlinks": "local/backlinks.json", "reviews": "local/reviews.json"}
     for key, rel in local.items():
         p = os.path.join(d, rel)
         if os.path.exists(p):
