@@ -38,7 +38,8 @@ def main():
     local = {"grid": "local/grid.json", "gbp": "local/gbp.json",
              "competitorsOrganic": "local/competitors.json", "brand": "local/brand.json",
              "aiVisibility": "local/aiVisibility.json", "analytics": "local/analytics.json",
-             "backlinks": "local/backlinks.json", "reviews": "local/reviews.json"}
+             "backlinks": "local/backlinks.json", "reviews": "local/reviews.json",
+             "audit": "local/audit.json"}
     for key, rel in local.items():
         p = os.path.join(d, rel)
         if os.path.exists(p):

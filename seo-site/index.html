@@ -206,6 +206,11 @@ footer{font-size:12px;color:var(--muted);border-top:1px solid var(--line);paddin
   </div>
 
   <section>
+    <div class="head"><h2>Technical health (whole site)</h2><div class="note" id="auditStamp"></div></div>
+    <div id="auditWrap"><div class="empty">A sitewide crawl of titles, headings, canonicals and speed appears here.</div></div>
+  </section>
+
+  <section>
     <div class="head"><h2>Blog health</h2><div class="note" id="healthStamp"></div></div>
     <div id="health"><div class="empty">The weekly blog check lists broken links, retired handles and off-brand terms here.</div></div>
   </section>
@@ -439,7 +444,19 @@ footer{font-size:12px;color:var(--muted);border-top:1px solid var(--line);paddin
       <div class="callout good" style="margin-top:12px">${esc(r.note)}</div>
       <div style="margin-top:12px"><b style="font-size:13px">Recent reviews</b><ul class="find" style="margin-top:6px;display:grid;gap:8px">${recent}</ul></div>`;
   }
-  function renderAll(){renderStamp();renderKpis();renderNotes();renderChart();renderChips();renderRanks();renderGrid();renderRivals();renderComp();renderBrand();renderGbp();renderAi();renderAnalytics();renderBacklinks();renderReviews();renderOpp();renderPages();renderHealth();renderRuns();}
+  function renderAudit(){
+    const a=state.audit, wrap=$("#auditWrap"); if(!a){return;}
+    $("#auditStamp").textContent=`${a.pagesCrawled} pages crawled · checked ${dateLabel(String(a.checkedAt).slice(0,10))}`;
+    const c=a.counts;
+    const items=(a.topIssues||[]).map(i=>`<li><span class="pill ${i.sev}">${i.sev==='bad'?'fix':i.sev==='warn'?'check':'minor'}</span> ${esc(i.label)}${i.detail?`<div class="note" style="margin-left:46px">${esc(i.detail)}</div>`:""}${i.fix?`<div class="note" style="margin-left:46px">→ ${esc(i.fix)}</div>`:""}</li>`).join("");
+    wrap.innerHTML=`<div class="kpis" style="grid-template-columns:repeat(3,1fr);max-width:420px">
+      <div class="kpi"><div class="label">Critical</div><div class="val">${c.critical}</div></div>
+      <div class="kpi"><div class="label">Warnings</div><div class="val">${c.warning}</div></div>
+      <div class="kpi"><div class="label">Minor</div><div class="val">${c.info}</div></div></div>
+      <div class="callout good" style="margin-top:12px">${esc(a.note)}</div>
+      <ul class="find" style="list-style:none;padding:0;display:grid;gap:10px;margin-top:12px">${items}</ul>`;
+  }
+  function renderAll(){renderStamp();renderKpis();renderNotes();renderChart();renderChips();renderRanks();renderGrid();renderRivals();renderComp();renderBrand();renderGbp();renderAi();renderAnalytics();renderBacklinks();renderReviews();renderAudit();renderOpp();renderPages();renderHealth();renderRuns();}
 
   $("#mClicks").addEventListener("click",()=>{state.metric="clicks";$("#mClicks").setAttribute("aria-pressed","true");$("#mImpr").setAttribute("aria-pressed","false");renderChart();});
   $("#mImpr").addEventListener("click",()=>{state.metric="impressions";$("#mImpr").setAttribute("aria-pressed","true");$("#mClicks").setAttribute("aria-pressed","false");renderChart();});
@@ -447,7 +464,7 @@ footer{font-size:12px;color:var(--muted);border-top:1px solid var(--line);paddin
   renderAll();
 
   fetch("data.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(d=>{
-    ["summary","daily","opp","pages","health","grid","gbp","competitorsOrganic","brand","aiVisibility","analytics","backlinks","reviews"].forEach(k=>{state[k]=d[k]||null;});
+    ["summary","daily","opp","pages","health","grid","gbp","competitorsOrganic","brand","aiVisibility","analytics","backlinks","reviews","audit"].forEach(k=>{state[k]=d[k]||null;});
     state.keywords=d.keywords||[];state.runs=d.runs||[];state.localRivals=d.localRivals||[];renderAll();
   }).catch(()=>{$("#stamp").textContent="Could not load data.json.";});
 })();
