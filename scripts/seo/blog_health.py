@@ -8,6 +8,7 @@ Checks:
   dead_link      internal link that falls through to the contact page (soft 404)
   legacy_link    link to a retired handle or dead domain
   banned_term    force plate, clubhead/clubface, "Citation Hook", etc.
+  brand_link     social link whose handle is not the canonical brand handle
   schema_missing no Article JSON-LD on the page
   off_cdn_image  <img> hosted outside the GHL media library
   artifact       build leftovers such as [object Object] or [IMAGE: ...]
@@ -44,8 +45,29 @@ BANNED = [
     (r"\bfour (?:primary |distinct )?release patterns\b", "four release patterns"),
     (r"game[- ]changer", "game-changer"),
     (r"\bEJS Golf Academy\b", "EJS Golf Academy"),
+    (r"\bEJS Golf\b(?!\s+Academy)", "EJS Golf (old company name)"),
 ]
 ARTIFACTS = [(r"\[object Object\]", "[object Object]"), (r"\[(?:IMAGE|GRAPH|VIDEO):", "[IMAGE: ...] callout")]
+
+# Brand-link checklist: the one canonical handle per platform. Any social link whose
+# handle does not match is flagged, so a brand-new wrong variant is caught, not just the
+# known-dead handles already listed in LEGACY. Handles compared lowercase.
+#   (domain+path regex capturing the handle, canonical handle, platform label)
+# NB: the canonical LinkedIn is coacherikschjolberg — /in/ejsgolf is the retired handle
+# (see LEGACY above and the live site, which uses coacherikschjolberg everywhere).
+# Each domain is anchored with a left boundary so it can't match inside another host
+# (e.g. "max.com" must not match the x.com rule).
+SOCIAL_CANON = [
+    (r"(?<![\w.-])youtube\.com/@([A-Za-z0-9_.-]+)", "coacherikschjolberg", "YouTube"),
+    (r"(?<![\w.-])instagram\.com/@?([A-Za-z0-9_.]+)", "coacherikschjolberg", "Instagram"),
+    (r"(?<![\w.-])facebook\.com/@?([A-Za-z0-9_.-]+)", "coacherikgolf", "Facebook"),
+    (r"(?<![\w.-])linkedin\.com/in/([A-Za-z0-9_.-]+)", "coacherikschjolberg", "LinkedIn"),
+    (r"(?<![\w.-])(?:twitter|x)\.com/@?([A-Za-z0-9_]+)", "coach_ejs", "X"),
+]
+# Non-profile paths on those domains (share widgets, post/permalinks) — never a handle.
+SOCIAL_SKIP = {"sharer", "sharer.php", "share", "dialog", "plugins", "intent", "home",
+               "hashtag", "profile.php", "p", "reel", "reels", "tv", "explore", "watch",
+               "embed", "shorts", "channel", "c", "user", "playlist", "shortsharearticle"}
 
 
 def fetch(url):
@@ -106,6 +128,18 @@ def main():
             if n: findings.append({"slug": slug, "kind": "banned_term", "detail": f"{label} x{n}"})
         for rx, label in ARTIFACTS:
             if re.search(rx, body): findings.append({"slug": slug, "kind": "artifact", "detail": label})
+        seen_brand = set()
+        for rx, canon, label in SOCIAL_CANON:
+            for h in re.findall(rx, body, re.I):
+                handle = h.strip("/").lower()
+                if handle in SOCIAL_SKIP or handle == canon or handle.isdigit():
+                    continue
+                key = (label, handle)
+                if key in seen_brand:
+                    continue
+                seen_brand.add(key)
+                findings.append({"slug": slug, "kind": "brand_link",
+                                 "detail": f"wrong {label} handle: {h} (use {canon})"})
         for src in re.findall(r'<img[^>]*src="([^"]+)"', body):
             host = urllib.parse.urlparse(src).netloc
             if host and not host.endswith(OK_IMAGE_HOSTS):
