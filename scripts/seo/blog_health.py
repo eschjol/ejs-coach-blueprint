@@ -22,7 +22,7 @@ from concurrent.futures import ThreadPoolExecutor
 SITE = "https://ejsgolf.com"
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
 OK_IMAGE_HOSTS = ("assets.cdn.filesafe.space", "storage.googleapis.com", "images.leadconnectorhq.com",
-                  "stcdn.leadconnectorhq.com", "img.youtube.com", "i.ytimg.com")
+                  "stcdn.leadconnectorhq.com", "files.leadconnectorhq.com", "img.youtube.com", "i.ytimg.com")
 LEGACY = [
     (r"youtube\.com/@ejsgolf\b", "YouTube @ejsgolf (404)"),
     (r"(?:twitter|x)\.com/ejs_golf\b", "X @EJS_Golf"),
