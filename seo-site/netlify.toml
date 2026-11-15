@@ -1,0 +1,10 @@
+# Private SEO dashboard (seo.ejsgolf.com). Password protection is set on the
+# Netlify site itself; these headers keep it out of search engines regardless.
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-cache"
