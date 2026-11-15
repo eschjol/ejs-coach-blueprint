@@ -24,14 +24,16 @@ API. Board went from **61 findings → 16** over this cleanup. Last updated 2026
 
 ## REMAINING
 
-### junior-golf-lessons-in-scottsdale-az — NOT API-editable
-Confirmed a **legacy `/blog/b/` blog post** (canonical `https://ejsgolf.com/blog/b/junior-golf-lessons-in-scottsdale-az`).
-It does not appear in the current `/blogs/posts` API (checked all 210 posts, including by
-title "Finding & Learning Your Swing"), so it can't be edited from the API the rest of this
-cleanup used. Its issues: "EJS Golf Academy" ×5, "EJS Golf" ×6, dead YouTube @ejsgolf link,
-dead `/shaft-lean` link (→ `/what-is-shaft-lean`), no Article schema.
-Fix paths: (a) Erik edits it in the GHL UI's legacy blog section; or (b) recreate it as a
-current blog post (which IS API-editable) and 301-redirect the old URL.
+### junior-golf-lessons-in-scottsdale-az — DONE (fixed in place + redirect)
+Post record found under the archived-filter (id `6677bf84b3f3a758e590ce17`, status PUBLISHED,
+renders live), so it was API-editable after all — edited in place rather than recreated:
+- "EJS Golf Academy" / "EJS Golf" (9 mentions) → "Coach Erik Schjolberg Golf"
+- dead YouTube `@ejsgolf` → `youtube.com/@coachErikSchjolberg`
+- dead `/shaft-lean` → `/what-is-shaft-lean`
+- Article schema added
+- canonical corrected from the legacy `/blog/b/` URL to `/post/junior-golf-lessons-in-scottsdale-az`
+- **301 redirect** created: `/blog/b/junior-golf-lessons-in-scottsdale-az` → `/post/...`
+  (verified 301; `/post/` returns 200 and is now self-canonical). Redirect id `GzhPBHkJJwuvD5funNcD`.
 
 ### Off-CDN images (11) — cosmetic, low priority
 External reference images that render today but could rot: support.trackmangolf.com ×4,
