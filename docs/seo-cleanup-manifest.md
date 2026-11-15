@@ -1,46 +1,39 @@
 # SEO Board Cleanup — Manifest & Status
 
-Source: read-only blog-health scan of ejsgolf.com (149 posts). Working against the
-live GHL blog API. Last updated 2026-11-15.
+Source: read-only blog-health scan of ejsgolf.com. Working against the live GHL blog
+API. Board went from **61 findings → 16** over this cleanup. Last updated 2026-11-15.
 
-## DONE — live & verified (20 fixes)
+## DONE — live & verified
 
-### Dead internal links fixed (16 links, 13 posts)
-All PUT 200, each post's schema/image/anchor counts preserved.
+- **16 dead internal links** fixed across 13 posts (`/online-lessons` → `/online-golf-lessons`;
+  the broken `/post/...` cross-links repointed to their correct live destinations), plus one
+  visible-link-text polish. Each PUT preserved the post's schema, images, and other links.
+- **8 Article schema blocks added** (7 in the first pass + `eliminating-early-extension`),
+  cloned from the site's own `@graph` with each post's real values. Two posts the scanner
+  flagged already had Article schema in source — skipped to avoid duplicates.
+- **`four-release-patterns-golf-swing` rewritten** to the three-pattern taxonomy:
+  Body-Driven → Pivot-Dominant (Body-Driven); Rotational → Forearm-Rotational; Explosive +
+  Progressive **merged into one Timed Release section** (Late/Abrupt + Gradual/Staged tempo
+  settings), with matchup requirements preserved. Framework count, drills line, editor's note,
+  and the JSON-LD schema description all updated. No "four pattern" language remains.
+- **Strike-location dead link** (3 posts): `amateur-vs-pro-golf-swing-variance-gap` and
+  `duffed-chip-fix...` repointed to `/post/how-to-stop-shanking-heel-strike-truth`;
+  on the shank post itself the self-link was unwrapped to plain text.
+- **`how-ball-position-affects-shaft-lean`** featured-image alt text changed from
+  "golf ball and marketing for skool.com/ejsgolf" to a clean descriptive alt.
 
-| Fix | Posts | Dead → Correct (verified live) |
-|-----|-------|--------------------------------|
-| online-lessons | How-to-perfect-strikes, distance-in-golf-debate-part-1-of-2, eliminating-early-extension, golf-and-life, how-to-get-up-and-down-chipping (×2), rory-mcilroy-ryder-cup-spinner, shaft-lean-ball-compression, stop-topping-the-golf-ball, topped-golf-shot-mystery-revealed | `/online-lessons` → `/online-golf-lessons` |
-| shallowing | how-to-shallow-the-golf-club-sequence-first | `/post/the-science-of-shallowing` → `/post/the-science-of-shallowing-club-trail-elbow-data` |
-| topping | why-do-i-hit-behind-the-golf-ball | `/post/how-to-stop-topping-the-golf-ball-low-point` → `/post/stop-topping-the-golf-ball` |
-| hackmotion-video | how-to-stop-shanking-heel-strike-truth | `/post/hackmotion-wrist-data-golf-what-video-cannot-show` → `/post/hackmotion-wrist-angles-golf-swing-scottsdale` |
-| wrist-flexion | duffed-chip-fix..., how-to-stop-shanking... | `/post/wrist-flexion-extension-golf-impact-club-face` → `/post/hackmotion-wrist-flexion-extension-golf-data` |
-| lead-wrist | duffed-chip-fix... | `/post/lead-wrist-flexion-golf-compression` → `/post/hackmotion-wrist-flexion-extension-golf-data` |
-| visible-text polish | stop-topping-the-golf-ball | anchor text `ejsgolf.com/online-lessons` → `ejsgolf.com/online-golf-lessons` |
+## REMAINING
 
-### Article schema added (7 posts)
-Cloned the site's own `@graph` (Article + Person + Organization) with each post's real
-values. PGA-LPGA-Scratch-Statistic-Comp, head-down-golf-myth,
-how-to-evaluate-scottsdale-golf-lessons-for-real-results, how-to-fix-a-golf-slice-face-to-path,
-how-to-shallow-the-golf-club-sequence-first, scratch-golfer-vs-tour-pro-stats,
-why-do-i-hit-behind-the-golf-ball.
-(Scratch-vs-PGA-LPGA and scratch-vs-professional already had Article schema — skipped to
-avoid duplicates; scanner flagged them on the rendered page only.)
+### junior-golf-lessons-in-scottsdale-az — NOT API-editable
+Confirmed a **legacy `/blog/b/` blog post** (canonical `https://ejsgolf.com/blog/b/junior-golf-lessons-in-scottsdale-az`).
+It does not appear in the current `/blogs/posts` API (checked all 210 posts, including by
+title "Finding & Learning Your Swing"), so it can't be edited from the API the rest of this
+cleanup used. Its issues: "EJS Golf Academy" ×5, "EJS Golf" ×6, dead YouTube @ejsgolf link,
+dead `/shaft-lean` link (→ `/what-is-shaft-lean`), no Article schema.
+Fix paths: (a) Erik edits it in the GHL UI's legacy blog section; or (b) recreate it as a
+current blog post (which IS API-editable) and 301-redirect the old URL.
 
-## PENDING — needs Erik
-
-### Decision owed: dead link with no destination (3 posts)
-`/post/golf-strike-location-on-club-face-center-contact` — never-published / deleted page.
-Links in: amateur-vs-pro-golf-swing-variance-gap, duffed-chip-fix..., how-to-stop-shanking...
-Options: (a) point to `/post/how-to-stop-shanking-heel-strike-truth`; (b) remove the link,
-keep the text; (c) write the center-contact post and link to it.
-
-### Editorial — draft-first (wording in Erik's name)
-- **four-release-patterns-golf-swing** — built on the retired FOUR-pattern model (heading
-  "The Four Release Patterns"). Needs a real rewrite to the three-pattern taxonomy
-  (Pivot-Dominant, Forearm-Rotational, Timed), not a word swap.
-- **junior-golf-lessons-in-scottsdale-az** — "EJS Golf Academy" ×5, "EJS Golf" ×6, dead
-  YouTube @ejsgolf link, dead `/shaft-lean` link (→ `/what-is-shaft-lean`), no schema.
-  Full cleanup pass, drafted for review.
-- **how-ball-position-affects-shaft-lean** — featured-image alt text reads
-  "golf ball and marketing for skool.com/ejsgolf" (dead domain in metadata). Rewrite alt.
+### Off-CDN images (11) — cosmetic, low priority
+External reference images that render today but could rot: support.trackmangolf.com ×4,
+static.wixstatic.com ×3, researchgate.net, australiangolfdigest.com.au,
+blogger.googleusercontent.com, media.licdn.com. Optional: re-host into the GHL media library.
